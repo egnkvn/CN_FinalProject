@@ -1,8 +1,22 @@
 let AddButton = document.getElementById('AddMsg');
 
-AddButton.onclick = clickfunc;
 
-function clickfunc(){
-    console.log(1)
+function clickfunc() {
+    var net = require('net');
+
+    var host = 'webcode.me';
+    var port = 80;
+
+    var socket = new net.Socket();
+    socket.connect(port, host, () => {
+        socket.write('GET / HTTP/1.0\r\n\r\n');
+    });
+
+    socket.on('data', (data) => {
+        console.log(`${data}`);
+        socket.destroy();
+    });
 }
+
+AddButton.onclick = clickfunc;
 

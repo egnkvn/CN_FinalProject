@@ -13,17 +13,20 @@ def check_content_type(filename):
 def handle_request(request):
     """Handles the HTTP request."""
     headers = request.split('\n')
+    print(headers)
     method, filename, version = headers[0].split()
-    if filename == '/':
-        filename = '/index.html'
-    try:
-        fin = open('.'+filename)
-        content = fin.read()
-        fin.close()
-        ctype = check_content_type(filename)
-        response = 'HTTP/1.0 200 OK\n'+ 'Content-Type: {}\n\n'.format(ctype) + content
-    except FileNotFoundError:
-        response = 'HTTP/1.0 404 NOT FOUND\n\n404 NOT FOUND'
+    if(method == 'GET'):
+        if filename == '/':
+            filename = '/index.html'
+        try:
+            fin = open('.'+filename)
+            content = fin.read()
+            fin.close()
+            ctype = check_content_type(filename)
+            response = 'HTTP/1.0 200 OK\n'+ 'Content-Type: {}\n\n'.format(ctype) + content
+        except FileNotFoundError:
+            response = 'HTTP/1.0 404 NOT FOUND\n\n404 NOT FOUND'
+    # elif(method == 'POST'):
 
     return response
 
@@ -48,7 +51,7 @@ while True:
     print(req)
 
     res = handle_request(req)
-    print(res)
+    # print(res)
     c.send(res.encode())
     # c.send('HTTP/1.0 200 OK\n'.encode())
     # c.send('Content-Type: text/html\n'.encode())
