@@ -1,7 +1,7 @@
 import random
 import socket
 import time
-from module import login
+from module import login, signup
 
 def check_content_type(filename):
     if(filename.endswith('.js')):
@@ -30,11 +30,14 @@ def handle_request(request):
     elif(method == 'POST'):
         body = headers[-1]
         if(filename == '/login.py'):
-            response = login.main()
+            response = login.main(body)
+            # response = 'HTTP/1.0 404 NOT FOUND\n\n404 NOT FOUND'
+        elif(filename == '/signup.py'):
+            response = signup.main(body)
     return response
 
 
-s = socket.socket()         # Create a socket object
+s = socket.socket()     # Create a socket object
 host = socket.getfqdn() # Get local machine name
 port = 9090
 s.bind((host, port))        
@@ -56,8 +59,4 @@ while True:
     res = handle_request(req)
     # print(res)
     c.send(res.encode())
-    # c.send('HTTP/1.0 200 OK\n'.encode())
-    # c.send('Content-Type: text/html\n'.encode())
-    # c.send('\n'.encode()) # header and body should be separated by additional newline
-    # c.send(html.encode())
     c.close()
