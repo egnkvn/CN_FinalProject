@@ -14,7 +14,6 @@ def check_content_type(filename):
 def handle_request(request):
     """Handles the HTTP request."""
     headers = request.split('\n')
-    # print(headers)
     method, filename, version = headers[0].split()
     if(method == 'GET'):
         if filename == '/':
@@ -31,7 +30,6 @@ def handle_request(request):
         body = headers[-1]
         if(filename == '/login.py'):
             response = login.main(body)
-            # response = 'HTTP/1.0 404 NOT FOUND\n\n404 NOT FOUND'
         elif(filename == '/signup.py'):
             response = signup.main(body)
     return response
@@ -39,7 +37,7 @@ def handle_request(request):
 
 s = socket.socket()     # Create a socket object
 host = socket.getfqdn() # Get local machine name
-port = 9090
+port = 9092
 s.bind((host, port))        
 
 print ('Starting server on', host, port)

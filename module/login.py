@@ -18,12 +18,15 @@ def main(body):
     info = body2dict(body)
     with open('json/account.json','r+') as f:
         database = json.load(f)
-    for i in database['account']:
-        if(i["username"] == info["username"]):
-            databaseinfo = i
-            break
-    if(info["password"] == databaseinfo["password"]):
-        response = redirect('/MsgBoard.html')
+    if(len([i for i in database["account"] if i["username"] == info["username"]])):
+        for i in database['account']:
+            if(i["username"] == info["username"]):
+                databaseinfo = i
+                break
+        if(info["password"] == databaseinfo["password"]):
+            response = redirect('/MsgBoard.html')
+        else:
+            response = redirect('/')
     else:
         response = redirect('/')
     return response
