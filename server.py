@@ -1,39 +1,42 @@
 import random
 import socket
 import time
+from module import login
 
 def check_content_type(filename):
     if(filename.endswith('.js')):
-        return 'application/x-javascript'
-    elif(filename.endswith('.jpg')):
-        return 'text/css'
+        return 'JS','application/x-javascript'
+    elif(filename.endswith('.css')):
+        return 'css','text/css'
     else:
-        return 'text/html'
+        return 'html','text/html'
 
 def handle_request(request):
     """Handles the HTTP request."""
     headers = request.split('\n')
-    print(headers)
+    # print(headers)
     method, filename, version = headers[0].split()
     if(method == 'GET'):
         if filename == '/':
             filename = '/index.html'
         try:
-            fin = open('.'+filename)
+            ftype, ctype = check_content_type(filename)
+            fin = open('{}'.format(ftype)+filename)
             content = fin.read()
-            fin.close()
-            ctype = check_content_type(filename)
+            fin.close()   
             response = 'HTTP/1.0 200 OK\n'+ 'Content-Type: {}\n\n'.format(ctype) + content
         except FileNotFoundError:
             response = 'HTTP/1.0 404 NOT FOUND\n\n404 NOT FOUND'
-    # elif(method == 'POST'):
-
+    elif(method == 'POST'):
+        body = headers[-1]
+        if(filename == '/login.py'):
+            response = login.main()
     return response
 
 
 s = socket.socket()         # Create a socket object
 host = socket.getfqdn() # Get local machine name
-port = 9091
+port = 9090
 s.bind((host, port))        
 
 print ('Starting server on', host, port)

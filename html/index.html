@@ -8,23 +8,23 @@
         <h1>Login</h1>
     </header>
     <main>
-        <form id="login_form" class="form_class" action="login/login-access.php" method="post">
+        <form id="login_form" class="form_class" action="login.py" method="post">
             <div class="form_div">
                 <label>Username:</label>
                 <input class="field_class" name="login_txt" type="text" placeholder="account name" autofocus>
                 <label>Password:</label>
                 <input id="pass" class="field_class" name="password_txt" type="password" placeholder="password">
-                <button class="submit_class" type="submit" form="login_form" onclick="return validarLogin()">Enter</button>
+                <button class="submit_class" type="submit" form="login_form">Enter</button>
             </div>
             <div class="info_div">
-                <p>No account? <a href="register/reg-form.php">register!</a></p>
+                <p>No account? <a href="SignUp.html">register!</a></p>
             </div>
         </form>
     </main>
     <footer>
         <p>Desenvolvido por <a href="#">JM_Code&trade;</a></p>
     </footer>   
-    <div>
+    <!-- <div>
         <label>
             Add Message:<input type="text" size="40">
         </label>
@@ -34,6 +34,6 @@
         <h1>Message Board</h1>
         <div id="MsgBoard">
         </div>
-    </div>
+    </div> -->
     <script src="main.js"></script>
 </body>
