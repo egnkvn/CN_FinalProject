@@ -1,4 +1,5 @@
 import json
+import os
 
 def redirect(path):
     header = 'HTTP/1.1 302 OK\r\nContent-Type: text/html\r\n'
@@ -25,6 +26,11 @@ def main(body):
                 break
         if(info["password"] == databaseinfo["password"]):
             response = redirect('/MsgBoard.html')
+            os.remove('json/active.json')
+            with open('json/active.json','w') as f:
+                file_data = {"username": info["username"]}
+                f.seek(0)
+                json.dump(file_data, f, indent = 4)
         else:
             response = redirect('/')
     else:

@@ -1,13 +1,15 @@
 import random
 import socket
 import time
-from module import login, signup
+from module import login, signup, saveMsg
 
 def check_content_type(filename):
     if(filename.endswith('.js')):
         return 'JS','application/x-javascript'
     elif(filename.endswith('.css')):
         return 'css','text/css'
+    elif(filename.endswith('.json')):
+        return 'json','application/json'
     else:
         return 'html','text/html'
 
@@ -32,12 +34,14 @@ def handle_request(request):
             response = login.main(body)
         elif(filename == '/signup.py'):
             response = signup.main(body)
+        elif(filename == '/saveMsg.py'):
+            response = saveMsg.main(body)   
     return response
 
 
 s = socket.socket()     # Create a socket object
 host = socket.getfqdn() # Get local machine name
-port = 9092
+port = 9090
 s.bind((host, port))        
 
 print ('Starting server on', host, port)
