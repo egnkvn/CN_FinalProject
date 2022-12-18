@@ -43,7 +43,7 @@ def handle_request(request):
 
 s = socket.socket()     # Create a socket object
 host = socket.getfqdn() # Get local machine name
-port = 9091
+port = 9092
 s.bind((host, port))        
 
 print ('Starting server on', host, port)
