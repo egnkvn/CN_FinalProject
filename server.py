@@ -16,6 +16,8 @@ def check_content_type(filename):
 def handle_request(request):
     """Handles the HTTP request."""
     headers = request.split('\n')
+    if len(headers[0]) == 0:
+        return 'HTTP/1.0 200 OK'
     method, filename, version = headers[0].split()
     if(method == 'GET'):
         if filename == '/':
