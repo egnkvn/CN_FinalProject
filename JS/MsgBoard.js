@@ -55,3 +55,7 @@ function post() {
         })
     }
 }
+
+function logout() {
+    
+}
